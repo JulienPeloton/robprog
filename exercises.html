@@ -12,6 +12,7 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Welcome to Fitter documentation!" href="index.html" /> 
@@ -23,6 +24,8 @@
         <div class="rel" role="navigation" aria-label="related navigation">
           <a href="index.html" title="Welcome to Fitter documentation!"
              accesskey="P">previous</a> |
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a>
         </div>
@@ -37,8 +40,142 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="fitter-module">
-<h1>Fitter module<a class="headerlink" href="#fitter-module" title="Permalink to this heading">¶</a></h1>
+  <section id="module-example.fitter_module_doc">
+<span id="fitter-module"></span><h1>Fitter module<a class="headerlink" href="#module-example.fitter_module_doc" title="Permalink to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="example.fitter_module_doc.fit_data">
+<span class="sig-prename descclassname"><span class="pre">example.fitter_module_doc.</span></span><span class="sig-name descname"><span class="pre">fit_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#example.fitter_module_doc.fit_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use non-linear least squares to fit <cite>model_function</cite> to data (<cite>x</cite>, <cite>y</cite>)</p>
+<p>Assumes <code class="docutils literal notranslate"><span class="pre">ydata</span> <span class="pre">=</span> <span class="pre">model_function(xdata)</span></code>, with default parameters
+of <code class="docutils literal notranslate"><span class="pre">optimize.curve_fit</span></code> from scipy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array</em>) – The independent variable where the data is measured.</p></li>
+<li><p><strong>y</strong> (<em>array</em>) – The dependent data, nominally <code class="docutils literal notranslate"><span class="pre">model_function(x,</span> <span class="pre">...)</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>params</strong> (<em>array</em>) – Optimal values for the parameters so that the sum of the squared
+residuals of <code class="docutils literal notranslate"><span class="pre">f(xdata)</span> <span class="pre">-</span> <span class="pre">ydata</span></code> is minimized.</p></li>
+<li><p><strong>errors</strong> (<em>array</em>) – The estimated one standard deviation errors
+on the parameters from the covariance returned by
+<cite>optimize.curve_fit</cite>: <code class="docutils literal notranslate"><span class="pre">errors</span> <span class="pre">=</span> <span class="pre">np.sqrt(np.diag(pcov))</span></code>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The algorithm uses the Levenberg-Marquardt algorithm
+through <cite>leastsq</cite>. Note that this algorithm can only deal with
+unconstrained problems.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.optimize.least_squares</span></code></dt><dd><p>Minimize the sum of squares of nonlinear functions.</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy.stats.linregress</span></code></dt><dd><p>Calculate a linear least squares regression for two sets of measurements.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ydata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xdata</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">params</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">fit_data</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="example.fitter_module_doc.load_data">
+<span class="sig-prename descclassname"><span class="pre">example.fitter_module_doc.</span></span><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#example.fitter_module_doc.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fn</strong> (<em>str</em>) – Name of the file to open.
+The data must be formatted as csv.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>File data as a pd.DataFrame</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dir_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="s1">&#39;../data.csv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdf</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="example.fitter_module_doc.model_function">
+<span class="sig-prename descclassname"><span class="pre">example.fitter_module_doc.</span></span><span class="sig-name descname"><span class="pre">model_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">T</span></span></span><a class="headerlink" href="#example.fitter_module_doc.model_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate sine function at angle <cite>x</cite> with parameters <cite>scale</cite> and <cite>offset</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array_like</em>) – Angle, in radians (<span class="math notranslate nohighlight">\(2 \pi\)</span> rad equals 360 degrees).</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – scale factor for the sine</p></li>
+<li><p><strong>offset</strong> (<em>float</em>) – Offset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The scaled sine of each element of <cite>x</cite>.
+This is a scalar if <cite>x</cite> is a scalar.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The sine is one of the fundamental functions of trigonometry (the
+mathematical study of triangles).  Consider a circle of radius 1
+centered on the origin.  A ray comes in from the <span class="math notranslate nohighlight">\(+x\)</span> axis, makes
+an angle at the origin (measured counter-clockwise from that axis), and
+departs from the origin.  The <span class="math notranslate nohighlight">\(y\)</span> coordinate of the outgoing
+ray’s intersection with the unit circle is the sine of that angle.  It
+ranges from -1 for <span class="math notranslate nohighlight">\(x=3\pi / 2\)</span> to +1 for <span class="math notranslate nohighlight">\(\pi / 2.\)</span>  The
+function has zeroes where the angle is a multiple of <span class="math notranslate nohighlight">\(\pi\)</span>.
+Sines of angles between <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(2\pi\)</span> are negative.
+The numerous properties of the sine and related functions are included
+in any standard trigonometry text.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="p">,</span> <span class="n">offset</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">model_function</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span><span class="p">,</span> <span class="n">offset</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">model_function</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">offset</span><span class="p">),</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="example.fitter_module_doc.plot_fit">
+<span class="sig-prename descclassname"><span class="pre">example.fitter_module_doc.</span></span><span class="sig-name descname"><span class="pre">plot_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#example.fitter_module_doc.plot_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot fit against measurements</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>ndarray</em>) – The independent variable where the data is measured.</p></li>
+<li><p><strong>y</strong> (<em>ndarray</em>) – The dependent data</p></li>
+<li><p><strong>params</strong> (<em>ndarray</em>) – Optimal values for the parameters from <cite>fit_data</cite></p></li>
+<li><p><strong>errors</strong> (<em>ndarray</em>) – The estimated one standard deviation errors
+on the parameters from <cite>fit_data</cite></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -52,7 +189,13 @@
           <h3>Table of Contents</h3>
           <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Fitter module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fitter module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example.fitter_module_doc.fit_data"><code class="docutils literal notranslate"><span class="pre">fit_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example.fitter_module_doc.load_data"><code class="docutils literal notranslate"><span class="pre">load_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example.fitter_module_doc.model_function"><code class="docutils literal notranslate"><span class="pre">model_function()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example.fitter_module_doc.plot_fit"><code class="docutils literal notranslate"><span class="pre">plot_fit()</span></code></a></li>
+</ul>
+</li>
 </ul>
 
           <div role="search">
@@ -74,6 +217,8 @@
           <div role="navigation" aria-label="related navigaton">
             <a href="index.html" title="Welcome to Fitter documentation!"
               >previous</a> |
+            <a href="py-modindex.html" title="Python Module Index"
+              >modules</a> |
             <a href="genindex.html" title="General Index"
               >index</a>
           </div>
